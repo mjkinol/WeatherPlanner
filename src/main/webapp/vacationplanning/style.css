@@ -1,0 +1,49 @@
+#page{
+    display: flex;
+    max-height: 60%;
+}
+
+#input{
+    border-right: thin solid #dee2e6;
+    height: auto;
+    background-color: white;
+    padding: 10px 20px;
+    flex-grow: 1;
+}
+
+#input label{
+    font-size: 120%;
+}
+
+#input #submit{
+    margin: 20px 0px;
+    padding: 10px;
+}
+
+#input #temp-low, #temp-high{
+    width: 60px;
+}
+
+#results{
+    flex-grow: 3;
+    margin-left: 1%;
+    background-color: white;
+    padding: 10px;
+    height: auto;
+    text-align: center;
+}
+
+#results table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#results th{
+    text-align: left;
+    border-bottom: solid #17a2b8;
+}
+
+#results td, th {
+    border-bottom: thin solid #dee2e6;
+    padding: 6px 0px;
+}

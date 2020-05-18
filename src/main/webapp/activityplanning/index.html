@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+
+<html>
+<style>
+	button:focus {outline:0;}
+</style>
+<head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> Activity Planning </title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="../global.css"> 
+        <script type="text/javascript" src="../utils.js"></script>
+        <script type="text/javascript" src="main.js"></script>
+        <script src="jquery-3.4.1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../vacationplanning/style.css"> 
+</head>
+<body onload="checkHistory()">
+    <div id="header">
+        <div id="head">
+			<div id=log-in>
+				<button type="button" onclick="modal.show()">Log In</button>
+			</div>
+			<div id=history>
+				<button type="button" onclick="sortLikes()">Sort</button>
+			</div>
+		</div>
+        <h1 class="title">Activity Planning</h1>
+    </div>
+    <div id="page">
+        <div class="modal shadow" id = "modal" style="display: none;">
+            <div>
+                <form onsubmit="return false;">
+                    <label for="username">Username</label><br>
+                    <input type="text" id="username" name="username" value=""><br>
+                    <label for="password">Password</label><br>
+                    <input type="password" id="password" name="password" value=""><br>
+                    
+                    <button name="log-in" value="LogIn" type="submit" id="submit-log-in" onclick="user.logIn()">Log In</button>
+                    <button name="create" value="CreateUser" type="submit" id="create" onclick="user.createUser()">Create Account</button>
+
+                    <button name="close" value="Close" type="submit" id="create" onclick="modal.close()">Cancel</button>
+                </form>
+            </div>
+            <div style="margin-left: 50px;">
+                <p id="log-in-message" class="error"></p>
+            </div>
+        </div>
+
+
+        <div id="input" class="shadow">
+            <form onsubmit="return submitForm()">
+                    <label for="activity">Activity</label><br>
+                    <input type="text" id="activity" name="activity" value=""><br>
+                    <label for="location">Location</label><br>
+                    <input type="text" id="location" name="location" value="">
+                    <button name="auto-loc" id="auto-loc" onclick="locFinder.autoFillInput(document.getElementById('location')); return false;">My Location</button><br>
+                    <label for="radius">Radius</label><br>
+                    <input type="number" id="radius" name="radius" value=""><br>
+                    <button name="submit" value="Submit" type="submit" id="submit">Find My Activity Spot</button>
+                    <label>C</label>
+                    <label class="switch">
+                            <input type="checkbox" checked id="unit">
+                            <span class="slider"></span>
+                    </label>
+                    <label>F</label>
+            </form>
+        </div>
+        <div  class="shadow" id="results">
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>City</th>
+                        <th>Country</th>
+                        <th>Current Temp</th>
+                        <th>Distance</th>
+                        <th>Favorite</th>
+                        <th>Like</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <ul id="pag" class="pagination">
+			</ul>
+            <h3 id="error-message" class="error"></h3>
+        </div>
+    </div>
+    <div id="navbar">
+        <div class="shadow"><a href="../index.html"><img src="../nav-bar-icons/home.png" alt="Home" height="42" width="42"><p>Home</p></a></div>
+        <div class="shadow"><a href="../vacationplanning/index.html"><img src="../nav-bar-icons/umbrella.png" alt="Vacation" height="42" width="42"><p>Vacation</p></a></div>
+        <div class="shadow nav-selected"><a href="../activityplanning/index.html"><img src="../nav-bar-icons/soccer.png" alt="Activity" height="42" width="42"><p>Activity</p></a></div>
+        <div class="shadow"><a href="../weatheranalysis/index.html"><img src="../nav-bar-icons/calculator.png" alt="Analysis" height="42" width="42"><p>Analysis</p></a></div>
+    </div>
+</body>
+<script>
+function checkHistory(){
+	//tableManager = new TableManager(document.getElementById("table"));
+	var history = localStorage.getItem("history");
+	var query = localStorage.getItem("query");
+	console.log(history);
+	if(history == "true"){
+		var arr = query.split(",");
+		
+		var activ = arr[0];
+		activ = activ.trim();
+		document.getElementById("activity").value = activ;
+		
+		var res = arr[1];
+		res = res.trim();
+		document.getElementById("num-results").value = res;
+		
+		var city = arr[2];
+		city = city.trim();
+		document.getElementById("location").value = city;
+		
+		var dist = arr[3];
+		dist = dist.trim();
+		document.getElementById("radius").value = dist;
+		
+		var unit = arr[4];
+		unit = unit.trim();
+		unit = unit.substring(1);
+		if(unit == "F"){
+			document.getElementById("unit").checked = true;
+		}
+		else{
+			document.getElementById("unit").checked = false;
+		}
+		localStorage.history = "false";
+		submitForm();
+	}
+	localStorage.history = "false";
+}
+</script>
+</html>

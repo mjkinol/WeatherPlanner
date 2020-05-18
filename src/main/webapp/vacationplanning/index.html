@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+
+<html>
+<style>
+	button:focus {outline:0;}
+</style>
+<head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> Vacation Planning </title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="../global.css"> 
+        <link rel="stylesheet" type="text/css" href="style.css"> 
+       <!--  <script src="jquery-3.4.1.min.js"></script> -->
+        <script type="text/javascript" src="../utils.js"></script>
+        <script type="text/javascript" src="main.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</head>
+<body onload="checkHistory()">
+    <div id="header">
+    	<div id="head">
+			<div id=log-in>
+				<button type="button" onclick="modal.show()">Log In</button>
+			</div>
+			<div id=history>
+				<button type="button" onclick="sortLikes()">Sort</button>
+			</div>
+		</div>
+        <h1 class="title">Vacation Planning</h1>
+    </div>
+    <div id="page">
+        <div class="modal shadow" id = "modal" style="display: none;">
+            <div>
+                <form onsubmit="return false;">
+                    <label for="username">Username</label><br>
+                    <input type="text" id="username" name="username" value=""><br>
+                    <label for="password">Password</label><br>
+                    <input type="password" id="password" name="password" value=""><br>
+                    
+                    <button name="log-in" value="LogIn" type="submit" id="submit-log-in" onclick="user.logIn()">Log In</button>
+                    <button name="create" value="CreateUser" type="submit" id="create" onclick="user.createUser()">Create Account</button>
+
+                    <button name="close" value="Close" type="submit" id="create" onclick="modal.close()">Cancel</button>
+                </form>
+            </div>
+            <div style="margin-left: 50px;">
+                <p id="log-in-message" class="error"></p>
+            </div>
+        </div>
+
+        <div id="input" class="shadow">
+            <form onsubmit="return submitForm()">
+                    <label for="temp-low">Temperature</label><br>
+                    <input type="number" id="temp-low" name="temp-low" value=""> -
+                    <input type="number" id="temp-high" name="temp-high" value=""><br>
+                    <label for="precip-type">Precipitation Type</label><br>
+                    <select id="precip-type" name="precip-type"> 
+                        <option value="Clear">Clear</option>
+                        <option value="Cloudy">Cloudy</option>
+                        <option value="Rainy">Rainy</option>
+                        <option value="Storming">Storming</option>
+                        <option value="Snowing">Snowing</option>
+                    </select><br>
+                    <label for="location">Location</label><br>
+                    <input type="text" id="location" name="location" value="">
+                    <button name="auto-loc" id="auto-loc" onclick="locFinder.autoFillInput(document.getElementById('location')); return false;">My Location</button><br>
+                    <label for="radius">Radius</label><br>
+                    <input type="number" id="radius" name="radius" value=""><br>
+                    <button name="submit" value="Submit" type="submit" id="submit">Find My Vacation Spot</button>
+                    <label>C</label>
+                    <label class="switch">
+                            <input type="checkbox" checked id="unit">
+                            <span class="slider"></span>
+                    </label>
+                    <label>F</label>
+            </form>
+        </div>
+        <div class="shadow" id="results">
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>City</th>
+                        <th>Country</th>
+                        <th>Avg Min Temp</th>
+                        <th>Avg Max Temp</th>
+                        <th>Distance</th>
+                        <th>Favorite</th>
+                        <th>Like</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+			<ul id="pag" class="pagination">
+			</ul>
+            <h3 id="error-message" class="error"></h3>
+        </div>
+    </div>
+    <div id="navbar">
+        <div class="shadow"><a href="../index.html"><img src="../nav-bar-icons/home.png" alt="Home" height="42" width="42"><p>Home</p></a></div>
+        <div class="shadow nav-selected"><a href="../vacationplanning/index.html"><img src="../nav-bar-icons/umbrella.png" alt="Vacation" height="42" width="42"><p>Vacation</p></a></div>
+        <div class="shadow"><a href="../activityplanning/index.html"><img src="../nav-bar-icons/soccer.png" alt="Activity" height="42" width="42"><p>Activity</p></a></div>
+        <div class="shadow"><a href="../weatheranalysis/index.html"><img src="../nav-bar-icons/calculator.png" alt="Analysis" height="42" width="42"><p>Analysis</p></a></div>
+    </div>
+</body>
+<script>
+function checkHistory(){
+	//tableManager = new TableManager(document.getElementById("table"));
+	var history = localStorage.getItem("history");
+	var query = localStorage.getItem("query");
+	console.log(history);
+	if(history == "true"){
+		var arr = query.split(",");
+		
+		var temp = arr[0];
+		var range = temp.split("-");
+		document.getElementById("temp-low").value = range[0];
+		document.getElementById("temp-high").value = range[1];
+		
+		var precip = arr[1];
+		precip = precip.trim();
+		document.getElementById("precip-type").value = precip
+		
+		var res = arr[2];
+		res = res.trim();
+		document.getElementById("num-results").value = res;
+		
+		var city = arr[3];
+		city = city.trim();
+		document.getElementById("location").value = city;
+		
+		var dist = arr[4];
+		dist = dist.trim();
+		document.getElementById("radius").value = dist;
+		
+		var unit = arr[5];
+		unit = unit.trim();
+		unit = unit.substring(1);
+		if(unit == "F"){
+			document.getElementById("unit").checked = true;
+		}
+		else{
+			document.getElementById("unit").checked = false;
+		}
+		localStorage.history = "false";
+		submitForm();
+	}
+	localStorage.history = "false";
+}
+</script>
+</html>

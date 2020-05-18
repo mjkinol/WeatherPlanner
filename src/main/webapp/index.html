@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html style="overflow: auto;">
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+<link rel="stylesheet" href="global.css">
+<script type="text/javascript" src="utils.js"></script>
+</head>
+<body onload="checkHistory()">
+	<div id="header">
+		<div id=log-in>
+			<button type="button" onclick="modal.show()">Log In</button>
+		</div>
+
+        <h1 class="title">Weather Search</h1>
+
+	</div>
+	<div class="modal shadow" id = "modal" style="display: none;">
+		<div>
+			<form onsubmit="return false;">
+				<label for="username">Username</label><br>
+				<input type="text" id="username" name="username" value=""><br>
+				<label for="password">Password</label><br>
+				<input type="password" id="password" name="password" value=""><br>
+				
+				<button name="log-in" value="LogIn" type="submit" id="submit-log-in" onclick="user.logIn()">Log In</button>
+				<button name="create" value="CreateUser" type="submit" id="create" onclick="user.createUser()">Create Account</button>
+
+				<button name="close" value="Close" type="submit" id="create" onclick="modal.close()">Cancel</button>
+			</form>
+		</div>
+		<div style="margin-left: 50px;">
+			<p id="log-in-message" class="error"></p>
+		</div>
+	</div>
+	
+	<div><br><br><br></div>
+	
+	<h3 class="minititle" id="miniTitle" style="color: #007bff;" hidden=true>Search History</h3>
+	<div class="shadow" id="historyResults" style="max-height: 90px;overflow: auto;" hidden=true>
+
+    	<table class="shadow" id="table" style="width:100%;text-align:left;border-collapse:collapse;overflow-y: scroll; overflow-x: hidden;" border=1>
+	   </table>
+	</div>
+	<div class="shadow">
+		<div id = "search" style="padding-top:1px;">
+			<div class = "form" method="get" style="display:flex;justify-content:center;margin-top:10px">
+				<div class="box" style="width:20%">
+					<input type="text" style="width:90%" class="searchBar" id= "locationInput"  name="searchByLocationBar" placeholder="Enter location (city or zip)" autofocus><br><br>
+					<button name="auto-loc" id="auto-loc" onclick="locFinder.autoFillInput(document.getElementById('locationInput')); return false;">My Location</button>
+				</div>
+				<div class="box2" style="width:10%">
+					<label class = "normalText">°C</label>
+					<label class="switch">
+					  <input type="checkbox" id="unit">
+					  <span class="slider round"></span>
+					</label>
+					<label class = "normalText">°F</label>
+				</div>
+				<div class="box3" style="width:10%">
+					<button id="mainSearchBtn" class = "weatherButton" type="button" onclick = "return validateForm()">Show me the Weather</button><br><br>
+				</div>
+			</div>
+		</div>
+		<div id = "weatherdata" style="display:flex;flex-direction:column;justify-content:center">
+			<h1 style="text-align:center"><label id = "location"></label></h1>
+			<h3 style="text-align:center"><label class = "normalText" id = "date" ></label></h3>
+			<img id="weatherIcon" style="display:block;margin:auto">
+			<h3 style="text-align:center"><label class = "normalText" id = "description"></label></h3>
+			<h1 style="text-align:center"><label class = "normalText" id = "weather"></label></h1>
+		</div>
+	</div>
+</div>
+	<div id="navbar">
+		<div class="shadow nav-selected"><a href="../index.html"><img src="nav-bar-icons/home.png" alt="Home" height="42" width="42"><p>Home</p></a></div>
+		<div class="shadow"><a href="vacationplanning/index.html"><img src="nav-bar-icons/umbrella.png" alt="Vacation" height="42" width="42"><p>Vacation</p></a></div>
+		<div class="shadow"><a href="activityplanning/index.html"><img src="nav-bar-icons/soccer.png" alt="Activity" height="42" width="42"><p>Activity</p></a></div>
+		<div class="shadow"><a href="weatheranalysis/index.html"><img src="nav-bar-icons/calculator.png" alt="Analysis" height="42" width="42"><p>Analysis</p></a></div>
+	</div>
+</body>
+<script type="text/javascript" src="../homepage/main.js"></script>
+</html>

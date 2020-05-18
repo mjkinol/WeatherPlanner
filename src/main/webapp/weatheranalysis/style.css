@@ -1,0 +1,54 @@
+table {
+    border-collapse: collapse;
+    width: 30%;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  tr:nth-child(even) {background-color: #FFFFFF;}
+  
+  html{
+      overflow-y: hidden;
+  }
+  
+  .current{
+    position: absolute;
+    left: 0;
+    top: 10%;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+  }
+  .info{
+    position: relative;
+    top: 10%;
+    width: 100%;
+    left: 10%;
+    font-size: 24px;
+    text-align: center;
+    display : block;
+  }
+  
+  /* Image carousal styling */
+  .slide {display: none}
+  .carousal{
+    display: block;
+    padding: 15px 15px;
+    max-width: 40px;
+    position: fixed;
+    top: 0px;
+    right: 400px;
+  }
+  
+  .navbar{
+      position: relative;
+      display: block;
+  }
+  #forecast{
+      display: inline-block;
+  }
+  
+  #weatherIcon{
+      max-width: 13%;
+  }

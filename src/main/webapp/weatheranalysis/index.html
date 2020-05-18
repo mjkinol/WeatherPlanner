@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html style="height:100%;overflow-y:scroll;">
+<head>
+	<meta charset="UTF-8">
+	<title>Weather Analysis</title>
+	<link rel="stylesheet" href="../global.css">
+	<link rel="stylesheet" href="style.css">
+	<script type="text/javascript" src="../utils.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		google.charts.load('current', {'packages':['corechart']});
+	</script>
+</head>
+
+<body>
+	<h1 class="title" style="margin:0px; padding-top:20px">Weather Analysis</h1>
+	<div id="header">
+		<div id=log-in>
+			<button type="button" onclick="modal.show()">Log In</button>
+		</div>
+	</div>
+	<div id="page">
+		<div class="modal shadow" id = "modal" style="display: none; z-index: 15;">
+            <div>
+                <form onsubmit="return false;">
+                    <label for="username">Username</label><br>
+                    <input type="text" id="username" name="username" value=""><br>
+                    <label for="password">Password</label><br>
+                    <input type="password" id="password" name="password" value=""><br>
+                    
+                    <button name="log-in" value="LogIn" type="submit" id="submit-log-in" onclick="user.logIn()">Log In</button>
+                    <button name="create" value="CreateUser" type="submit" id="create" onclick="user.createUser()">Create Account</button>
+
+                    <button name="close" value="Close" type="submit" id="create" onclick="modal.close()">Cancel</button>
+                </form>
+            </div>
+            <div style="margin-left: 50px;">
+                <p id="log-in-message" class="error"></p>
+            </div>
+        </div>
+	<!-- Favorite cities table-->
+	<div style="overflow-y:hidden; height:500px; padding:10px;">
+		<div id="favs" class="shadow" style="display: inline-block;
+											padding:10px;
+											top:125px;
+											position:absolute;
+											z-index:10;
+											pointer-events: all;
+											background-color: white">
+		<table class="col-sm" id = "favCities" style="display: block;
+										width: 100%;
+										max-height: 350px;
+										overflow-y: scroll">
+			<thead>
+				<tr>
+					<th>Favorite Cities</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<div style="text-align: center; padding-top:15px;">
+			<input type="button" class="button" onclick="removeFavorite()" value="Remove From Favorites"/> 
+		</div> 
+		<div style="text-align: center;">
+			<label class = "normalText">°F</label>
+			<label class="switch">
+				<input type="checkbox" id="unitPicker">
+				<span class="slider round"></span>
+			</label> 
+			<label class = "normalText">°C</label>
+		</div>
+		</div>
+		<!-- Current weather data -->
+		<div class="shadow" id ="currentWrapper" style="display: inline-block;
+														top:-70px;
+														max-width:30%;
+														height:400px;
+														position:absolute;
+														top: 120px;
+														left: 35%;
+														z-index:10;
+														pointer-events: all;
+														background-color: white">
+			<div id = "current" style="display: inline-block; text-align:center;">
+				<label class = "normalText" id = "date"></label>
+				<h1><label id = "location"></label></h1>
+				<h2>
+					<label class = "normalText" id = "weather"></label>
+					<label class = "normalText" id = "description"></label>
+				</h2>
+				<img id="weatherIcon">
+			</div>
+			<!-- 5 day forecast table-->
+			<div id="forecastTable"  style="padding-left:5%;">
+				<table id="forecast" style="width:100%;">
+				</table>
+			</div>
+		</div>
+		<div id="left-col">
+			<div id="curve_chart" style="width: 26%; height: 200px; position: fixed; top: 365px; left: 69.8%;"></div>
+			<div class="slide" id="slide1" style="position: fixed; top: 140px; left: 73%;"></div>
+			<div class="slide" id="slide2" style="position: fixed; top: 140px; left: 73%;"></div>
+			<div class="slide" id="slide3" style="position: fixed; top: 140px; left: 73%;"></div>	
+		</div>
+	</div>
+	</div>
+	<div style="margin:0px;" id="currCity" hidden></div>
+	<div style="margin:0px;" id="histData" hidden></div>
+
+	<div id="navbar" style="position:relative;bottom:25px;left:0px">
+		<div class="shadow"><a href="../index.html"><img src="../nav-bar-icons/home.png" alt="Home" height="42" width="42"><p>Home</p></a></div>
+		<div class="shadow"><a href="../vacationplanning/index.html"><img src="../nav-bar-icons/umbrella.png" alt="Vacation" height="42" width="42"><p>Vacation</p></a></div>
+		<div class="shadow"><a href="../activityplanning/index.html"><img src="../nav-bar-icons/soccer.png" alt="Activity" height="42" width="42"><p>Activity</p></a></div>
+		<div class="shadow nav-selected"><a href="../weatheranalysis/index.html"><img src="../nav-bar-icons/calculator.png" alt="Analysis" height="42" width="42"><p>Analysis</p></a></div>
+	</div>
+	<script type="text/javascript" src="main.js"></script>
+</body>
+</html>
